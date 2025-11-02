@@ -16,14 +16,14 @@ public class CarController {
     private VehicleService carService;
 
 
-    @GetMapping("/{vehicleId}")
+    @RequestMapping(value = "/{vehicleId}", method = RequestMethod.GET)
     public ResponseEntity<Vehicles> getCarDetails(@PathVariable String vehicleId) {
         Vehicles car = new Vehicles();
         car = carService.getCarDetails(vehicleId);
         return ResponseEntity.ok(car);
     }
 
-    @PostMapping
+    @RequestMapping(value = "/car", method = RequestMethod.POST)
     public ResponseEntity<Vehicles> createCarDetails(@RequestBody Vehicles carDetails) {
         Vehicles car = new Vehicles();
         car = carService.saveCarDetails(carDetails);

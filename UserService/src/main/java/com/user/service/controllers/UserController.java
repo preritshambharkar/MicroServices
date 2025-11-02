@@ -13,26 +13,30 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User user1 = userService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user1);
-    }
-
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getSingleUser(@PathVariable String userId) {
-        User user = userService.getUser(userId);
-        return ResponseEntity.ok(user);
-    }
-
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
         List users = userService.getAllUserDetails();
         return ResponseEntity.ok(users);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User user1 = userService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<User> getSingleUser(@PathVariable String userId) {
+        User user = userService.getUser(userId);
+        return ResponseEntity.ok(user);
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Long> deleteUser(@PathVariable String userId) {
+        long user = userService.deleteUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
 }

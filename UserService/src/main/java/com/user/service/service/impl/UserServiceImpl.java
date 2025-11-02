@@ -32,13 +32,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String userId) {
-        return userRepository.findById(userId).orElseThrow( ()-> new ResourceNotFoundException("User by given Id was not found on records!! : " + userId));
+        return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User by given Id was not found on records!! : " + userId));
     }
 
     @Override
-    public int deleteUser(String userId) {
+    public long deleteUser(String userId) {
+        User user = getUser(userId);
         userRepository.deleteById(userId);
-        return 0;
+        return Long.parseLong(userId);
     }
 
     @Override
