@@ -36,9 +36,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUser(String userId) {
+    public long deleteUser(String userId) {
+        User user = getUser(userId);
         userRepository.deleteById(userId);
-        return 0;
+        return Long.parseLong(userId);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST )
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User user1 = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
@@ -34,5 +34,9 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Long> deleteUser(@PathVariable String userId) {
+        long user = userService.deleteUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
 }
