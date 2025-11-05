@@ -1,17 +1,28 @@
 package com.user.service.service.impl;
 
+import com.car.service.entities.Vehicles;
 import com.user.service.dao.UserDao;
 import com.user.service.entities.User;
 import com.user.service.exception.ResourceNotFoundException;
+import com.user.service.external.service.CarService;
 import com.user.service.repositories.UserRepository;
 import com.user.service.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    private CarService carService;
+
 
     @Autowired
     private UserRepository userRepository;
@@ -19,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public User saveUser(User user) {
@@ -32,6 +45,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String userId) {
+        try {
+            ArrayList object = restTemplate.getForObject("http://CARSERVICE/vehicle/1", ArrayList.class);
+        } catch (Exception e) {
+            log.error("Exception Occurred : "+ e.getMessage() + " " + e);
+        }
+        try {
+            Vehicles vehicles = carService.getVehicleDetails("1");
+            log.info("from fiegn clinet");
+        } catch (Exception e) {
+            log.error("Exception Occurred : "+ e.getMessage() + " " + e);
+        }
+
         return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User by given Id was not found on records!! : " + userId));
     }
 
