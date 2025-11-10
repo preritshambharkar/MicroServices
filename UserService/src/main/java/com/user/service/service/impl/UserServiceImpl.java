@@ -1,6 +1,6 @@
 package com.user.service.service.impl;
 
-import com.car.service.entities.Vehicles;
+import com.user.service.vo.Vehicles;
 import com.user.service.dao.UserDao;
 import com.user.service.entities.User;
 import com.user.service.exception.ResourceNotFoundException;
@@ -10,6 +10,7 @@ import com.user.service.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,17 +47,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId) {
         try {
+            //Internal call using load balanced annotation
             ArrayList object = restTemplate.getForObject("http://CARSERVICE/vehicle/1", ArrayList.class);
-        } catch (Exception e) {
-            log.error("Exception Occurred : "+ e.getMessage() + " " + e);
-        }
-        try {
-            Vehicles vehicles = carService.getVehicleDetails("1");
+
+            //calling other microservice using feign client
+            ResponseEntity<Vehicles> vehicles = carService.getVehicleDetails("1");
+            Vehicles vehicles1 = vehicles.getBody();
             log.info("from fiegn clinet");
         } catch (Exception e) {
             log.error("Exception Occurred : "+ e.getMessage() + " " + e);
         }
-
         return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User by given Id was not found on records!! : " + userId));
     }
 

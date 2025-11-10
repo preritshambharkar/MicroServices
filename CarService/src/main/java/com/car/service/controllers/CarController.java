@@ -23,11 +23,11 @@ public class CarController {
         return ResponseEntity.ok(vehicle);
     }
 
-    @RequestMapping(value = "/car", method = RequestMethod.POST)
-    public ResponseEntity<Vehicles> createVehicleDetails(@RequestBody Vehicles carDetails) {
-        Vehicles car = new Vehicles();
-        car = carService.saveCarDetails(carDetails);
-        return ResponseEntity.status(HttpStatus.CREATED).body(car);
+    @RequestMapping(value = "/vehicles", method = RequestMethod.POST)
+    public ResponseEntity<Vehicles> createVehicleDetails(@RequestBody Vehicles vehicleDetails) {
+        Vehicles vehicle = new Vehicles();
+        vehicle = carService.saveCarDetails(vehicleDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehicle);
     }
 
 
