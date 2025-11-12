@@ -47,15 +47,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId) {
         try {
-            //Internal call using load balanced annotation
+            //Internal call using load balanced annotation "CARSERVICE is name of another serve no need to hardcode URL and Port number to access that CARSERVICE"
             ArrayList object = restTemplate.getForObject("http://CARSERVICE/vehicle/1", ArrayList.class);
+        } catch (Exception e) {
+            log.error("Exception Occurred : "+ e.getMessage() + " " + e);
+        }
 
+        try{
             //calling other microservice using feign client
             ResponseEntity<Vehicles> vehicles = carService.getVehicleDetails("1");
             Vehicles vehicles1 = vehicles.getBody();
             log.info("from fiegn clinet");
         } catch (Exception e) {
-            log.error("Exception Occurred : "+ e.getMessage() + " " + e);
+            log.error("Exception Occurred  feign client: "+ e.getMessage() + " " + e);
         }
         return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User by given Id was not found on records!! : " + userId));
     }

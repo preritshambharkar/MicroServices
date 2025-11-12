@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: USER-SERVICE
+    name: USERSERVICE
 
   datasource:
     url: jdbc:mysql://localhost:3306/microservices
@@ -20,13 +20,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
 eureka:
-  instances:
+  instance:
     prefer-ip-address: true
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-    enabled: true
-    jersey:
-      enabled: false
