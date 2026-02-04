@@ -3,11 +3,7 @@ server:
 
 spring:
   application:
-    name: CARSERVICE
-
-  cloud:
-    compatibility-verifier:
-      enabled: false
+    name: CAR-SERVICE
 
   datasource:
     url: jdbc:mysql://localhost:3306/microservices
@@ -23,11 +19,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  config:
+    import: configserver:http://localhost:8086
+
+
+#THIS EUREKA PROPERTIES ARE FETCH FROM CONFIGSERVER
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
