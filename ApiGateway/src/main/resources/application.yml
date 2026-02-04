@@ -3,15 +3,19 @@ server:
 
 spring:
   application:
-    name: APIGATEWAY
+    name: API-GATEWAY
   cloud:
     gateway:
       routes:
         - id: USERSERVICE
           uri: lb://USERSERVICE
           predicates:
-            - Path=/users/**
+            - Path=/users/**,/cart/**
 
+        - id: CARSERVICE
+          uri: lb://CARSERVICE
+          predicates:
+            - Path=/car/**
 eureka:
   instance:
     prefer-ip-address: true
