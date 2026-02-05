@@ -48,10 +48,10 @@ public class UserServiceImpl implements UserService {
     public User getUser(String userId) {
         try {
             /*
-                Internal call using load balanced annotation "CARSERVICE is name of another
-                serve no need to hardcode URL and Port number to access that CARSERVICE / another service"
+                Internal call using load balanced annotation "CAR-SERVICE is name of another
+                serve no need to hardcode URL and Port number to access that CAR-SERVICE / another service"
             */
-            ArrayList object = restTemplate.getForObject("http://CARSERVICE/vehicle/1", ArrayList.class);
+            ArrayList object = restTemplate.getForObject("http://CAR-SERVICE/vehicle/1", ArrayList.class);
             log.info("from HTTP request, but that is dynamic in nature as we are not passing Host and Port details");
         } catch (Exception e) {
             log.error("Exception Occurred : " + e.getMessage() + " " + e);
