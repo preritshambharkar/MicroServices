@@ -52,15 +52,15 @@ public class UserServiceImpl implements UserService {
                 serve no need to hardcode URL and Port number to access that CAR-SERVICE / another service"
             */
             ArrayList object = restTemplate.getForObject("http://CAR-SERVICE/vehicle/1", ArrayList.class);
-            log.info("from HTTP request, but that is dynamic in nature as we are not passing Host and Port details");
+            log.info("from HTTP request, but that is dynamic in nature as we are not passing Host and Port details"+ object);
         } catch (Exception e) {
             log.error("Exception Occurred : " + e.getMessage() + " " + e);
         }
         try {
             //Calling other microservice using feign client
-            ResponseEntity<Vehicles> vehicles = carService.getVehicleDetails("1");
-            Vehicles vehicles1 = vehicles.getBody();
-            log.info("from Feign client");
+            ResponseEntity<List<Vehicles>> vehicles = carService.getVehicleDetails("1");
+            List<Vehicles> vehicles1 =  vehicles.getBody();
+            log.info("from Feign client"+ vehicles1);
         } catch (Exception e) {
             log.error("Exception Occurred  feign client: " + e.getMessage() + " " + e);
         }

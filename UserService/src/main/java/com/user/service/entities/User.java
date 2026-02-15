@@ -1,6 +1,7 @@
 package com.user.service.entities;
 
 import com.user.service.vo.Rating;
+import com.user.service.vo.Vehicles;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +50,7 @@ public class User {
     private String address;
 
     @Transient  //not to save that in database
-    private List<Rating> ratings = new ArrayList<>();
+    private List<Vehicles> vehicles = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -63,7 +64,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", active=" + active +
                 ", address='" + address + '\'' +
-                ", ratings=" + ratings +
+                ", vehicles=" + vehicles +
                 '}';
     }
 }

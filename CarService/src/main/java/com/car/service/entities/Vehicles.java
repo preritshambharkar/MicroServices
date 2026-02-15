@@ -215,7 +215,7 @@ public class Vehicles {
     @Override
     public String toString() {
         return "Car{" +
-                "carId='" + vehicleId + '\'' +
+                "vehicleId='" + vehicleId + '\'' +
                 ", year='" + year + '\'' +
                 ", make='" + make + '\'' +
                 ", modal='" + modal + '\'' +
