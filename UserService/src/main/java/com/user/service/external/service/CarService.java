@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @FeignClient(name = "CAR-SERVICE")
 public interface CarService {
 
     @RequestMapping(value = "/vehicle/{vehicleId}", method = RequestMethod.GET)
-    public ResponseEntity<Vehicles> getVehicleDetails(@PathVariable("vehicleId") String vehicleId);
+    public ResponseEntity<List<Vehicles>> getVehicleDetails(@PathVariable("vehicleId") String vehicleId);
 
     @RequestMapping(value = "/vehicles", method = RequestMethod.POST)
     public Vehicles createVehicles(Vehicles vehicle);

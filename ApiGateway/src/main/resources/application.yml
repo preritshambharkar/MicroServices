@@ -15,7 +15,7 @@ spring:
         - id: CAR-SERVICE
           uri: lb://CAR-SERVICE
           predicates:
-            - Path=/car/**
+            - Path=/vehicle/**
 #eureka:
 #  instance:
 #    prefer-ip-address: true

@@ -15,13 +15,13 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
-    public Vehicles getCarDetails(String carId) {
+    public List getCarDetails(String carId) {
         List l = vehiclesDao.findAll();
-        return null;
+        return l;
     }
 
     @Override
     public Vehicles saveCarDetails(Vehicles car) {
-        return null;
+        return vehiclesDao.saveAllVehicleDetails(car);
     }
 }

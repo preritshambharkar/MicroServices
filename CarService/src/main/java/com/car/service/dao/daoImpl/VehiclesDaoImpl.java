@@ -28,6 +28,13 @@ public class VehiclesDaoImpl implements VehiclesDao {
     public List findAll() {
         Session session = sessionFactory.getCurrentSession();
         List l = session.createQuery("FROM Vehicles", Vehicles.class).getResultList();
-        return null;
+        return l;
+    }
+
+    @Override
+    public Vehicles saveAllVehicleDetails(Vehicles vehicles) {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(vehicles);
+        return vehicles;
     }
 }

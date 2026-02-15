@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/vehicle")
 public class CarController {
@@ -17,8 +19,8 @@ public class CarController {
 
 
     @RequestMapping(value = "/{vehicleId}", method = RequestMethod.GET)
-    public ResponseEntity<Vehicles> getVehicleDetails(@PathVariable String vehicleId) {
-        Vehicles vehicle = new Vehicles();
+    public ResponseEntity<List<Vehicles>> getVehicleDetails(@PathVariable String vehicleId) {
+        List vehicle;
         vehicle = carService.getCarDetails(vehicleId);
         return ResponseEntity.ok(vehicle);
     }
