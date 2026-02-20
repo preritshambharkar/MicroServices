@@ -19,8 +19,8 @@ public class CarController {
 
 
     @RequestMapping(value = "/{vehicleId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Vehicles>> getVehicleDetails(@PathVariable String vehicleId) {
-        List vehicle;
+    public ResponseEntity<Vehicles> getVehicleDetails(@PathVariable String vehicleId) {
+        Vehicles vehicle;
         vehicle = carService.getCarDetails(vehicleId);
         return ResponseEntity.ok(vehicle);
     }
@@ -31,7 +31,4 @@ public class CarController {
         vehicle = carService.saveCarDetails(vehicleDetails);
         return ResponseEntity.status(HttpStatus.CREATED).body(vehicle);
     }
-
-
-
 }

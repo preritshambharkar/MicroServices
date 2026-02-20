@@ -5,7 +5,6 @@ import com.car.service.entities.Vehicles;
 import com.car.service.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
@@ -15,9 +14,9 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
-    public List getCarDetails(String carId) {
-        List l = vehiclesDao.findAll();
-        return l;
+    public Vehicles getCarDetails(String carId) {
+        Vehicles vehicle = vehiclesDao.getCarDetails(carId);
+        return vehicle;
     }
 
     @Override

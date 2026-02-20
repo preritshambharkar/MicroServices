@@ -13,7 +13,7 @@ import java.util.List;
 public interface CarService {
 
     @RequestMapping(value = "/vehicle/{vehicleId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Vehicles>> getVehicleDetails(@PathVariable("vehicleId") String vehicleId);
+    public ResponseEntity<Vehicles> getVehicleDetails(@PathVariable("vehicleId") String vehicleId);
 
     @RequestMapping(value = "/vehicles", method = RequestMethod.POST)
     public Vehicles createVehicles(Vehicles vehicle);

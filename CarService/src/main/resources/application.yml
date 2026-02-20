@@ -29,3 +29,19 @@ spring:
 #    register-with-eureka: true
 #    service-url:
 #      defaultZone: http://localhost:8761/eureka
+
+
+# Below is Actuator configuration
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+  endpoint:
+    health:
+      show-details: always

@@ -50,7 +50,7 @@ public class User {
     private String address;
 
     @Transient  //not to save that in database
-    private List<Vehicles> vehicles = new ArrayList<>();
+    private Vehicles vehicles;
 
     @Override
     public String toString() {

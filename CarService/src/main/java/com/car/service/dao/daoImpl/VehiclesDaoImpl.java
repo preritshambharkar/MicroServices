@@ -21,7 +21,9 @@ public class VehiclesDaoImpl implements VehiclesDao {
 
     @Override
     public Vehicles getCarDetails(String carId) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Vehicles vehicles = session.get(Vehicles.class, carId);
+        return vehicles;
     }
 
     @Override

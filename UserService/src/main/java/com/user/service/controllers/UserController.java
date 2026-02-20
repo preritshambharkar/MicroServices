@@ -4,6 +4,8 @@ import com.user.service.service.UserService;
 import com.user.service.entities.User;
 import com.user.service.service.impl.UserServiceImpl;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UserController {
 
     public static final Logger log = LoggerFactory.getLogger(UserController.class);
+
+    private static int retryCount = 1;
 
     @Autowired
     private UserService userService;
@@ -34,9 +38,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
 
+
+
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET, produces = {"application/json"})
-    @CircuitBreaker(name = "carServiceVehicleDetailBreakers", fallbackMethod = "carServiceVehicleDetailsFallback")
+//  This is Circuit Breaker Annotation after implementation properties we can use this case of another service down time
+//  @CircuitBreaker(name = "carServiceVehicleDetailBreakers", fallbackMethod = "carServiceVehicleDetailsFallback")
+
+//  This is Retry Annotation after implement properties, retry logic will make call during down time of another service
+//  @Retry(name = "carServiceVehicleDetail", fallbackMethod = "carServiceVehicleDetailsFallback")
+    @RateLimiter(name="carServiceVehicleDetailRateLimiter", fallbackMethod = "carServiceVehicleDetailsFallback")
     public ResponseEntity<User> getSingleUser(@PathVariable String userId) {
+//        log.info("retryCount ===========" + retryCount);
+//        retryCount++;
         User user = userService.getUser(userId);
         return ResponseEntity.ok(user);
     }
@@ -47,6 +60,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    //this is fallback method need to be declear so that we can get some response if another service is Down
     public ResponseEntity<User> carServiceVehicleDetailsFallback(String userId, Exception ex) {
         log.info("fallback is executed because service is down "+  ex.getMessage());
         User user = new User();

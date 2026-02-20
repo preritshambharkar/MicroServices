@@ -51,7 +51,7 @@ public class Vehicles {
 
     @Override
     public String toString() {
-        return "Car{" +
+        return "Vehicle{" +
                 "carId='" + vehicleId + '\'' +
                 ", year='" + year + '\'' +
                 ", make='" + make + '\'' +
