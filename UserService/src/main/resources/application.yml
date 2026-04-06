@@ -18,6 +18,17 @@ spring:
 #        dialect: org.hibernate.dialect.MySQL8Dialect
   config:
     import: configserver:http://localhost:8086
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+notification:
+  rabbitmq:
+    queue: notification.queue
+    exchange: notification.exchange
+    routing-key: notification.send
 
 #eureka:
 #  instance:

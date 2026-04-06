@@ -1,11 +1,10 @@
 package com.user.service.controllers;
 
-import com.user.service.service.UserService;
 import com.user.service.entities.User;
-import com.user.service.service.impl.UserServiceImpl;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.user.service.rabbitmq.dto.NotificationEvent;
+import com.user.service.rabbitmq.service.UserNotificationPublisher;
+import com.user.service.service.UserService;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +25,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserNotificationPublisher userNotificationPublisher;
+
     @RequestMapping(method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity<List<User>> getAllUsers() {
         List users = userService.getAllUserDetails();
@@ -35,6 +37,11 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User user1 = userService.saveUser(user);
+        try {
+            userNotificationPublisher.publishUserCreatedEvent(user1);
+        } catch (Exception ex) {
+            log.error("Unable to publish user-created notification: {}", ex.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
 
@@ -58,6 +65,12 @@ public class UserController {
     public ResponseEntity<Long> deleteUser(@PathVariable String userId) {
         long user = userService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+    @PostMapping("/notifications/example")
+    public ResponseEntity<NotificationEvent> publishNotificationExample() {
+        NotificationEvent notificationEvent = userNotificationPublisher.publishExampleEvent();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(notificationEvent);
     }
 
     //this is fallback method need to be declear so that we can get some response if another service is Down

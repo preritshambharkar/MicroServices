@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: NOTIFICATION-SERVICE
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+notification:
+  rabbitmq:
+    enabled: ${NOTIFICATION_RABBITMQ_ENABLED:false}
+    queue: notification.queue
+    exchange: notification.exchange
+    routing-key: notification.send
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    enabled: ${EUREKA_CLIENT_ENABLED:false}
+    fetch-registry: ${EUREKA_CLIENT_ENABLED:false}
+    register-with-eureka: ${EUREKA_CLIENT_ENABLED:false}
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info

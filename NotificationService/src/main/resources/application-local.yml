@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    dynamic: false
+    listener:
+      simple:
+        auto-startup: false
+      direct:
+        auto-startup: false
+  cloud:
+    discovery:
+      enabled: false
+
+notification:
+  rabbitmq:
+    enabled: false
+
+eureka:
+  client:
+    enabled: false
