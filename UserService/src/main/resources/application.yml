@@ -28,19 +28,19 @@ spring:
 #    service-url:
 #      defaultZone: http://localhost:8761/eureka
 
-management:
-  health:
-    circuitbreakers:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include:
-          - info
-          - health
-  endpoint:
-    health:
-      show-details: always
+#management:
+#  health:
+#    circuitbreakers:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - info
+#          - health
+#  endpoint:
+#    health:
+#      show-details: always
 
 resilience4j:
   circuitbreaker:
@@ -64,6 +64,6 @@ resilience4j:
   ratelimiter:
     instances:
       carServiceVehicleDetailRateLimiter:
-        limitRefreshPeriod: 4s
-        limitForPeriod: 2
-        timeoutDuration: 0
+        limit-refresh-period: 4s
+        limit-for-period: 2
+        timeout-duration: 0s

@@ -32,16 +32,16 @@ spring:
 
 
 # Below is Actuator configuration
-management:
-  health:
-    circuitbreakers:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include:
-          - info
-          - health
-  endpoint:
-    health:
-      show-details: always
+#management:
+#  health:
+#    circuitbreakers:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - info
+#          - health
+#  endpoint:
+#    health:
+#      show-details: always
