@@ -16,6 +16,22 @@ spring:
           uri: lb://CAR-SERVICE
           predicates:
             - Path=/vehicle/**
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: pN9wmJDFLpr219V2jUdM0APX9IFhl73M
+            client-secret: jNrr2oL5nONH95a_Q6MxXK1RtoUTeBXsuueVFBCjiQsCFNyqyCkPJJAp7tSmKmby
+            scope: openid, email, profile, offline_access, Customer, Admin, User
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8085/login/oauth2/code/auth0"
+        provider:
+          auth0:
+            issuer-uri: https://dev-wf42m2g2y54dug5i.us.auth0.com/
+            jwk-set-uri: https://dev-wf42m2g2y54dug5i.us.auth0.com/.well-known/jwks.json
+auth0:
+  audience: https://dev-wf42m2g2y54dug5i.us.auth0.com/api/v2/
 #eureka:
 #  instance:
 #    prefer-ip-address: true
@@ -26,7 +42,25 @@ spring:
 #      defaultZone: http://localhost:8761/eureka
 
 management:
+  health:
+    refresh:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: gateway
+        include:
+          - info
+          - health
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+
+#okta:
+#  oauth2:
+#    issuer: https://dev-wf42m2g2y54dug5i.us.auth0.com/api/v2/
+#    client-secret: jNrr2oL5nONH95a_Q6MxXK1RtoUTeBXsuueVFBCjiQsCFNyqyCkPJJAp7tSmKmby
+#    client-id: pN9wmJDFLpr219V2jUdM0APX9IFhl73M
+#    audience: https://mymicroservice/
+#
+
