@@ -15,7 +15,7 @@ import java.util.Properties;
 public class HibernateConfiguration {
 
     @Bean()
-    public LocalSessionFactoryBean entityManagerFactory() {
+    public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("com.car.service.entities");
@@ -46,7 +46,7 @@ public class HibernateConfiguration {
     @Bean
     public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(entityManagerFactory().getObject());
+        transactionManager.setSessionFactory(sessionFactory().getObject());
         return  transactionManager;
     }
 }

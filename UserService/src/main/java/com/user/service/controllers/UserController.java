@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -30,7 +31,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity<List<User>> getAllUsers() {
-        List users = userService.getAllUserDetails();
+        List<User> users = userService.getAllUserDetails();
         return ResponseEntity.ok(users);
     }
 
@@ -54,7 +55,7 @@ public class UserController {
 //  This is Retry Annotation after implement properties, retry logic will make call during down time of another service
 //  @Retry(name = "carServiceVehicleDetail", fallbackMethod = "carServiceVehicleDetailsFallback")
     @RateLimiter(name="carServiceVehicleDetailRateLimiter", fallbackMethod = "carServiceVehicleDetailsFallback")
-    public ResponseEntity<User> getSingleUser(@PathVariable String userId) {
+    public ResponseEntity<User> getSingleUser(@PathVariable UUID userId) {
 //        log.info("retryCount ===========" + retryCount);
 //        retryCount++;
         User user = userService.getUser(userId);
@@ -62,8 +63,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE, produces = {"application/json"})
-    public ResponseEntity<Long> deleteUser(@PathVariable String userId) {
-        long user = userService.deleteUser(userId);
+    public ResponseEntity<UUID> deleteUser(@PathVariable UUID userId) {
+        UUID user = userService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
@@ -74,7 +75,7 @@ public class UserController {
     }
 
     //this is fallback method need to be declear so that we can get some response if another service is Down
-    public ResponseEntity<User> carServiceVehicleDetailsFallback(String userId, Exception ex) {
+    public ResponseEntity<User> carServiceVehicleDetailsFallback(UUID userId, Exception ex) {
         log.info("fallback is executed because service is down "+  ex.getMessage());
         User user = new User();
         user.setEmail("dummy@usergmail.com");

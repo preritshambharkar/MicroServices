@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userId) {
+    public User getUser(UUID userId) {
         Vehicles vehicles1 = null;
         try {
             /*
@@ -71,10 +72,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public long deleteUser(String userId) {
+    public UUID deleteUser(UUID userId) {
         User user = getUser(userId);
         userRepository.deleteById(userId);
-        return Long.parseLong(userId);
+        return user.getUserId();
     }
 
     @Override

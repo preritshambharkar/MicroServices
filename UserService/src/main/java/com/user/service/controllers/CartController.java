@@ -5,12 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/cart")
 public class CartController {
 
     @RequestMapping(value = "/{userId}/vehicle/{vehicleId}", method = RequestMethod.POST, produces = {"application/json"})
-    public ResponseEntity<User> addToCarts(@PathVariable("userId") String userId, @PathVariable("vehicleId") String vehicleId) {
+    public ResponseEntity<User> addToCarts(@PathVariable("userId") UUID userId, @PathVariable("vehicleId") String vehicleId) {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

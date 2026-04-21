@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -18,9 +19,9 @@ import java.util.List;
 public class User {
 
     @Id
-    @Column(name = "USER_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long user_Id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "USER_ID", updatable = false, nullable = false)
+    private UUID userId;
 
     @Column(name = "FIRST_NAME")
     @NotNull
@@ -55,7 +56,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "user_Id=" + user_Id +
+                "userId=" + userId +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", dob='" + dob + '\'' +

@@ -19,6 +19,8 @@ public class VehiclesDaoImpl implements VehiclesDao {
     @Autowired
     SessionFactory sessionFactory;
 
+
+    // this will get the vehicle results from database.
     @Override
     public Vehicles getCarDetails(String carId) {
         Session session = sessionFactory.getCurrentSession();
@@ -26,6 +28,7 @@ public class VehiclesDaoImpl implements VehiclesDao {
         return vehicles;
     }
 
+    // this will get the lsit of vehicles
     @Override
     public List findAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -33,10 +36,17 @@ public class VehiclesDaoImpl implements VehiclesDao {
         return l;
     }
 
+
+    // this will insert a record into database.
     @Override
     public Vehicles saveAllVehicleDetails(Vehicles vehicles) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(vehicles);
         return vehicles;
+    }
+
+
+    public void updateVehicleRecord(Vehicles vehicle){
+        Session session = sessionFactory.getCurrentSession();
     }
 }

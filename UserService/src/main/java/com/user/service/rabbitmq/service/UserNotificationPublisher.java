@@ -33,7 +33,7 @@ public class UserNotificationPublisher {
     public NotificationEvent publishUserCreatedEvent(User user) {
         NotificationEvent event = new NotificationEvent(
                 UUID.randomUUID().toString(),
-                String.valueOf(user.getUser_Id()),
+                String.valueOf(user.getUserId()),
                 user.getEmail(),
                 "Welcome to Auction Platform",
                 "Hello " + user.getFirst_name() + ", your account was created successfully.",
